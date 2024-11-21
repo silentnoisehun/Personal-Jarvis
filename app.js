@@ -1,6 +1,10 @@
+
+
 const startbtn = document.querySelector("#start");
 const stopbtn = document.querySelector("#stop");
 const speakbtn = document.querySelector("#speak");
+const aitext = document.querySelector("#aiBox");
+const userCommand = document.querySelector("#userCommand");
 
 
 // speechRecognition setup
@@ -67,6 +71,7 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
   if (finalTranscript.includes("open google")){
     readOut("opening goggle boss");
     window.open("https://www.google.com/");
+    return;
   }
 
   // GOOGLE SEARCH
@@ -79,15 +84,18 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
     input = input.join("").split(" ").join("+");
     console.log(input);
     window.open(`https://www.google.com/search?q=${input}`)
+    return;
   }
   if (finalTranscript.includes("hey jarvis open instagram")){
     readOut("opening instagram boss");
     window.open(`https://www.instagram.com/${JSON.parse(userdata).instagram}`);
+    return;
   };
 
   if (finalTranscript.includes("hey jarvis open twitter")){
     readOut("opening twitter boss");
     window.open(`https://x.com/${JSON.parse(userdata).twitter}`);
+    return;
   }
 
 
@@ -95,6 +103,7 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
   if (finalTranscript.includes("open github")){
     readOut("opening github boss");
     window.open(`https://github.com/${JSON.parse(userdata).github}`);
+    return;
   }
 
   if (finalTranscript.includes("what is the weather today")){
@@ -109,6 +118,71 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
     readOut("okay boss i am taking a nap");
     recognition.stop();
   }
+
+  if (finalTranscript.includes("who is tausif")){
+    readOut("woh aek gandu hai")
+  }
+
+
+  // gemmini ai integration
+
+  function callGeminiAPI(finalTranscript) {
+    const API = "AIzaSyCJMsBxB7ADXFxFmDvTsqLPU-0Qx5Ux3S8"; // Replace with your API key
+    const api_url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API}`;
+  
+    const request = new XMLHttpRequest();
+    request.open("POST", api_url, true);
+  
+    // Set headers for JSON content
+    request.setRequestHeader("Content-Type", "application/json");
+  
+    request.onload = function () {
+      if (this.status === 200) {
+        const apiResult = JSON.parse(this.responseText);
+        console.log("API Result:", apiResult);
+        
+        if (apiResult.candidates && apiResult.candidates[0].content.parts[0].text) {
+          const resultPart = apiResult.candidates[0].content.parts[0].text;
+          console.log("First Part:", resultPart);
+          userCommand .innerText = finalTranscript;
+        let res =  aitext.innerText = resultPart;
+          readOut(res);
+
+          
+        } else {
+          console.error("Unexpected API Response Structure");
+        }
+        
+      } else {
+        console.error(`Gemini API Error: ${this.status} - ${this.responseText}`);
+      }
+    };
+  
+    request.onerror = function () {
+      console.error("Request failed.");
+    };
+  
+    // Correct payload structure
+    const requestData = JSON.stringify({
+      contents: [
+        {
+          parts: [
+            {
+              text: finalTranscript,
+            },
+          ],
+        },
+      ],
+    });
+  
+    // Send the request
+    request.send(requestData);
+  }
+  
+  
+  
+  // Example call
+  callGeminiAPI(finalTranscript);
 
 };
 
@@ -128,7 +202,7 @@ stopbtn.addEventListener("click", () => {
 function readOut (message) {
   const speech = new SpeechSynthesisUtterance();
   const allVoices = speechSynthesis.getVoices()
-  speech.voice = allVoices[4];
+  speech.voice = allVoices[10];
   speech.text = message;
   speech.volume = 1;
   speech.rate = 0.9;
@@ -146,60 +220,6 @@ function readOut (message) {
 });
 
 // to get responce from the gemini api using voice
-
-
-function chatToAi(finalTranscript) {
-  const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCJMsBxB7ADXFxFmDvTsqLPU-0Qx5Ux3S8";
-  
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
-  const data = {
-    prompt: {
-      text: finalTranscript, // Use the transcript from speech recognition
-    },
-    temperature: 0.7,
-    candidateCount: 1,
-  };
-
-  // Send the query to the Gemini API
-  fetch(Api_Url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      if (result && result.candidates && result.candidates.length > 0) {
-        const aiResponse = result.candidates[0]?.output || "no responce from ai";
-        console.log("AI Response:", aiResponse);
-
-        // Read the response aloud using speech synthesis
-        readOut(aiResponse);
-      } else {
-        console.error("No response from AI");
-        readOut("I'm sorry, I couldn't understand that. Please try again.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error connecting to AI:", error);
-      readOut("There was an error processing your request.");
-    });
-}
-
-// Call this function after capturing the voice command in `onresult`
-recognition.onresult = function (event) {
-  let current = event.resultIndex;
-  let transcript = event.results[current][0].transcript.trim();
-  console.log("User said:", transcript);
-
-  // Pass the user input to the chatToAi function
-  chatToAi(transcript);
-};
-
-
-// =========================================//
 
 function weather(location){
   const weatherCount = document.querySelector(".temp").querySelectorAll("*");
