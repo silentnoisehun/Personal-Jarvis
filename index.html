@@ -11,22 +11,62 @@
 
 <body>
   <h1>My Naukar</h1>
-
-  <button id="start">start</button>
-  <button id="stop">stop</button>
-  <button id="speak">speak out</button>
   <div class="weather">
     <div class="temp">
       <p id="Location"></p>
+      <p id="country"></p>
       <p id="weatherT"></p>
       <p id="weatherD"></p>
-      <img src="" alt="" class="weatherIcon">
+      <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="img" class="weatherIcon">
       <p id="oTemp"></p>
       <p id="feelLikeTemp"></p>
       <p id="minT"></p>
       <p id="maxT"></p>
     </div>
   </div>
+
+  <div class="jarvis-setup">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" autocomplete="name">
+    <br>
+
+    <label for="bio">Bio:</label>
+    <input type="text" id="bio" name="bio" autocomplete="organization-title">
+    <br>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" autocomplete="address-level1">
+    <br>
+
+    <label for="instagram">Instagram Profile:</label>
+    <input type="url" id="instagram" name="instagram" autocomplete="url">
+    <br>
+
+    <label for="github">Git Profile:</label>
+    <input type="url" id="github" name="github" autocomplete="url">
+    <br>
+
+    <label for="twitter">Twitter Profile:</label>
+    <input type="url" id="twitter" name="twitter" autocomplete="url">
+    <br>
+
+    <button type="submit" id="sub-btn">Submit</button>
+  </div>
+
+
+  <div id="ai-chat">
+    <p id="userCommand">user command: </p>
+    <p id="aiBox">here is your responce: </p>
+
+
+  </div>
+
+
+
+
+  <button id="start">start</button>
+  <button id="stop">stop</button>
+  <button id="speak">speak out</button>
 
 
 
