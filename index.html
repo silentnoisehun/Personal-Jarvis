@@ -5,72 +5,145 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
-  <h1>My Naukar</h1>
-  <div class="weather">
-    <div class="temp">
-      <p id="Location"></p>
-      <p id="country"></p>
-      <p id="weatherT"></p>
-      <p id="weatherD"></p>
-      <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="img" class="weatherIcon">
-      <p id="oTemp"></p>
-      <p id="feelLikeTemp"></p>
-      <p id="minT"></p>
-      <p id="maxT"></p>
+  <div class="main-head">
+    <div class="contents">
+      <div class="logo">
+        <h1>Talk<span>TO</span>Me</h1>
+        <p>Your Personal AI</p>
+      </div>
+      <div class="navbar">
+        <ul class="nav-list">
+          <li>
+            <button class="drop-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+              </svg>
+              <span>Home</span>
+            </button>
+          </li>
+
+          <li>
+            <button class="drop-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+              </svg>
+              <span>About Us</span>
+            </button>
+          </li>
+
+          <li>
+            <button class="drop-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+              </svg>
+              <span>About Us</span>
+            </button>
+          </li>
+
+
+          <li>
+            <button class="drop-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+              </svg>
+              <span>About Us</span>
+            </button>
+          </li>
+
+
+
+          <button type="submit" id="login">Login</button>
+          <button type="submit" id="signup">Sign Up </button>
+
+
+        </ul>
+      </div>
+
+
     </div>
   </div>
 
-  <div class="jarvis-setup">
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" name="name" autocomplete="name">
-    <br>
+  <div class="main">
+    <div class="container">
+      <!-- AI Chat Section -->
+      <div id="ai-chat" class="chat-box">
+        <p>AI Chat will appear here...</p>
+      </div>
 
-    <label for="bio">Bio:</label>
-    <input type="text" id="bio" name="bio" autocomplete="organization-title">
-    <br>
+      <!-- Weather Widget -->
+      <div class="weather">
+        <div class="temp">
+          <p id="Location"></p>
+          <p id="country"></p>
+          <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon" class="weatherIcon">
+          <p id="weatherT"></p>
+          <p id="weatherD"></p>
+          <p id="oTemp"></p>
+          <p id="feelLikeTemp"></p>
+          <p id="minT"></p>
+          <p id="maxT"></p>
+        </div>
+      </div>
+    </div>
 
-    <label for="location">Location:</label>
-    <input type="text" id="location" name="location" autocomplete="address-level1">
-    <br>
-
-    <label for="instagram">Instagram Profile:</label>
-    <input type="url" id="instagram" name="instagram" autocomplete="url">
-    <br>
-
-    <label for="github">Git Profile:</label>
-    <input type="url" id="github" name="github" autocomplete="url">
-    <br>
-
-    <label for="twitter">Twitter Profile:</label>
-    <input type="url" id="twitter" name="twitter" autocomplete="url">
-    <br>
-
-    <button type="submit" id="sub-btn">Submit</button>
+    <!-- Control Buttons -->
+    <div class="btn-call">
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+      <button id="speak">Speak Out</button>
+    </div>
   </div>
+</body>
 
-
-  <div id="ai-chat">
-    <p id="userCommand">user command: </p>
-    <p id="aiBox">here is your responce: </p>
-
-
-  </div>
+</html>
 
 
 
 
-  <button id="start">start</button>
-  <button id="stop">stop</button>
-  <button id="speak">speak out</button>
+<div class="jarvis-setup">
+  <label for="name">Your Name:</label>
+  <input type="text" id="name" name="name" autocomplete="name">
+  <br>
+
+  <label for="bio">Bio:</label>
+  <input type="text" id="bio" name="bio" autocomplete="organization-title">
+  <br>
+
+  <label for="location">Location:</label>
+  <input type="text" id="location" name="location" autocomplete="address-level1">
+  <br>
+
+
+  <label for="instagram">Instagram Profile:</label>
+  <input type="url" id="instagram" name="instagram" autocomplete="url">
+  <br>
+
+  <label for="github">Git Profile:</label>
+  <input type="url" id="github" name="github" autocomplete="url">
+  <br>
+
+  <label for="twitter">Twitter Profile:</label>
+  <input type="url" id="twitter" name="twitter" autocomplete="url">
+  <br>
+
+  <button type="submit" id="sub-btn">Submit</button>
+</div>
 
 
 
-  <script src="app.js"></script>
+
+
+
+
+
+
+<script src="app.js"></script>
 </body>
 
 </html>
