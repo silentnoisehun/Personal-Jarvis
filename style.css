@@ -1,0 +1,393 @@
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Gorditas:wght@400;700&family=Inconsolata:wght@200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+:root {
+  --tex-color: #f3f4f6;
+  --primary-text: #1f2937;
+  --secondry-text: #10b981;
+  --buttons-links: #3b82f6;
+  --success-color: #22c55e;
+  --font-family: "Poppins", sans-serif;
+  --highlight: #f59e0b;
+  --border-color: #e2e8f0;
+  --hover: #0f766e;
+  --Font-name: "Ubuntu", sans-serif;
+  --text-color: #111827;
+  --Error-msg: #ef4444;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #11121ce6;
+  color: #333;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.contents {
+  display: flex;
+  gap: 20px; /* Space between AI Chat and Weather */
+  justify-content: center;
+}
+
+header svg {
+  color: var(--tex-color);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  flex: 0.2;
+  gap: 30px;
+}
+
+.logo h1 {
+  color: var(--tex-color);
+  font-size: 1rem;
+}
+
+.logo p {
+  display: inline-block;
+  width: 10rem;
+  text-align: center;
+  margin-top: -1.8rem;
+  margin-left: 10px;
+  color: var(--tex-color);
+  font-size: 1rem;
+  font-family: var(--Font-name);
+  background-color: #22c55e97;
+  border-radius: 1rem;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.8;
+}
+
+svg {
+  color: var(--tex-color);
+  font-size: 1px;
+  background-color: none;
+}
+
+.logo span {
+  color: var(--success-color);
+  font-family: var(--Font-name);
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.navbar span {
+  white-space: nowrap;
+  align-items: center;
+  font-size: 20px;
+  padding: 10px;
+  padding-top: 1rem;
+}
+
+.navbar ul > li {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #111827;
+  border-radius: 1rem;
+  text-align: center;
+  margin-left: 1.5rem;
+  margin-bottom: 2rem;
+  gap: 5rem;
+  transition: all ease-in 0.3s;
+}
+
+.drop-btn span {
+  text-align: center;
+  font-size: 15px;
+  color: var(--success-color);
+  font-family: var(--Font-name);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+.navbar ul > li:hover {
+  border: solid 2px var(--success-color);
+}
+
+.drop-btn {
+  width: 10rem;
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  color: var(--tex-color);
+  gap: 10px;
+}
+
+/* login and signup button  */
+
+.user {
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+}
+
+#login {
+  display: inline-block;
+  width: auto;
+  background-color: var(--buttons-links);
+  border: none;
+  border-radius: 1rem;
+  margin-left: 2.5rem;
+  font-family: var(--font-family);
+  animation: slideDown 0.3s ease-out;
+  transition: all ease 0.3s;
+}
+
+#signup {
+  display: inline-block;
+  width: 8rem;
+  white-space: nowrap;
+  background-color: var(--buttons-links);
+  border: none;
+  border-radius: 1rem;
+  margin-left: 1.5rem;
+  font-family: var(--font-family);
+}
+
+#login:hover {
+  background-color: #22c55ea9;
+  transform: translateX(10px);
+}
+
+#signup:hover {
+  background-color: #22c55ea9;
+  transform: translateX(10px);
+}
+
+/* Main Container */
+.main {
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 20px; /* Space between AI Chat and Weather */
+  justify-content: center;
+}
+
+/* AI Chat Box */
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 600px;
+  overflow-y: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+}
+
+#textinput {
+  color: var(--border-color);
+  font-size: 15px;
+  flex-grow: 1;
+  font-family: var(--Font-name);
+  margin-left: 110px;
+  margin-top: 20px;
+  padding: 20px;
+  width: 40rem;
+  height: 3rem;
+  border: 3px solid rgba(60, 175, 6, 0.811);
+  border-radius: 2rem;
+  background-color: var(--text-color);
+}
+
+#submit-btn {
+  margin-left: 30px;
+  cursor: pointer;
+  height: 100%;
+  border-radius: 45rem;
+  border: none;
+  background-color: var(--success-color);
+  transition: all ease 0.3s;
+}
+
+#submit-btn:active {
+  background-color: #ef4444;
+  transform: translateX(5px);
+}
+
+.chat-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Weather Widget */
+.weather {
+  width: 10rem;
+  flex: 0.5;
+  background: #1e293b;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.weatherIcon {
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+}
+
+.temp p {
+  margin: 5px 0;
+}
+
+/* Buttons */
+.btn-call {
+  text-align: center;
+  margin-top: 20px;
+  margin-right: 27rem;
+}
+
+.btn-call button {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-family: var(--Font-name);
+  font-weight: 800;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-call button:hover {
+  background-color: #059669;
+}
+
+/* Form Section */
+.jarvis-setup {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+
+.jarvis-setup label {
+  font-size: 1rem;
+  color: #38bdf8;
+}
+
+.jarvis-setup input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.jarvis-setup input:focus {
+  outline: none;
+  border: 2px solid #10b981;
+  transition: border 0.3s ease-in-out;
+}
+
+.jarvis-setup button {
+  width: 100%;
+  padding: 12px;
+  background: #10b981;
+  color: #ffffff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.jarvis-setup button:hover {
+  background: #059669;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  body {
+    padding: 40px;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  .jarvis-setup {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .jarvis-setup input {
+    grid-column: span 2;
+  }
+
+  .jarvis-setup button {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #ai-chat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  button {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+  }
+}
