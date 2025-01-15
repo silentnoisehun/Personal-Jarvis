@@ -5,6 +5,9 @@ const stopbtn = document.querySelector("#stop");
 const speakbtn = document.querySelector("#speak");
 const aitext = document.querySelector("#aiBox");
 const userCommand = document.querySelector("#userCommand");
+const userInput = document.querySelector("#textinput");
+const inputSubmit = document.querySelector("#submit-btn");
+
 
 
 // speechRecognition setup
@@ -20,10 +23,50 @@ recognition.onstart = function() {
 
 
 
+
 // on end
 recognition.onend = function(){
   console.log("stopped");
 };
+
+function appendToDiv(type, message) {
+  // Get the chat container
+  const chatContainer = document.getElementById("ai-chat");
+
+  // Create a new message div
+  const messageDiv = document.createElement("div");
+  messageDiv.style.marginBottom = "20px";
+  messageDiv.style.padding = "12px";
+  messageDiv.style.borderRadius = "1rem";
+  messageDiv.style.maxWidth = "70%";
+  messageDiv.style.wordWrap = "break-word";
+
+  // Styling based on the type
+  if (type === "user") {
+    messageDiv.style.backgroundColor = " #111827";
+    messageDiv.style.color = "white";
+    messageDiv.style.fontSize = "1rem"
+    messageDiv.style.borderRadius = "1rem"
+    messageDiv.style.textAlign = "right";
+    messageDiv.style.marginLeft = "auto"; // Align user messages to the right
+  } else {
+    messageDiv.style.backgroundColor = "#1f2937";
+     messageDiv.style.fontSize = "1rem"
+    messageDiv.style.color = "white";
+    messageDiv.style.textAlign = "left";
+    messageDiv.style.marginRight = "auto"; // Align AI messages to the left
+  }
+
+  // Set the message content
+  messageDiv.textContent = message;
+
+  // Append the message div to the chat container
+  chatContainer.appendChild(messageDiv);
+
+  // Automatically scroll to the bottom
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+
+}
 
 
 
@@ -40,6 +83,7 @@ recognition.onresult =function (event){
   if (finalTranscript.includes("open youtube")){
     readOut("opening youtube boss");
     window.open("https://www.youtube.com/");
+    return;
   }
 
   // search on youtube 
@@ -56,15 +100,23 @@ recognition.onresult =function (event){
 
     // Uncomment to open YouTube search in a new tab
     window.open(`https://www.youtube.com/results?search_query=${inputYoutube}`, "_blank");
+    return;
 }
 
 
 if (finalTranscript.includes("who is your boss") || finalTranscript.includes("who developed you")){
   readOut(" i am developed by shadil.  he is my boss")
+  return;
 };
 
-if ( finalTranscript.includes("hey jarvis introduce your master") || finalTranscript.includes("hey jarvis introduce your developer")){
-  readOut("Hello! I am Jarvis, Shadil's personal assistant. Let me introduce the extraordinary mind behind my creation. Shadil is a talented individual from Bihar, India, currently pursuing a B.Tech in Computer Science at Galgotias University. His fascination with Artificial Intelligence and Machine Learning drives him to innovate and explore the limitless possibilities of technology. Shadil is not only a tech enthusiast but also a skilled communicator. He thrives in opportunities to speak and participate in programs where he can showcase his abilities and inspire others. His passion for learning and his knack for problem-solving make him a promising leader in the tech world. Get ready to witness his incredible journey!")
+if ( finalTranscript.includes("hey jarvis introduce your master") || finalTranscript.includes("hey jarvis introduce your developer") || finalTranscript.includes("introduce your master")){
+ let res = `Hello! I am Jarvis, Shadil's personal assistant. Let me introduce the extraordinary mind behind my creation. Shadil is a talented individual from Bihar, India, currently pursuing a B.Tech in Computer Science at Galgotias University. His fascination with Artificial Intelligence and Machine Learning drives him to innovate and explore the limitless possibilities of technology. Shadil is not only a tech enthusiast but also a skilled communicator. He thrives in opportunities to speak and participate in programs where he can showcase his abilities and inspire others. His passion for learning and his knack for problem-solving make him a promising leader in the tech world. Get ready to witness his incredible journey! `
+  appendToDiv("user",finalTranscript);
+  appendToDiv("ai",res);
+
+  readOut(res);
+
+  return;
 }
 
 
@@ -86,13 +138,13 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
     window.open(`https://www.google.com/search?q=${input}`)
     return;
   }
-  if (finalTranscript.includes("hey jarvis open instagram")){
+  if (finalTranscript.includes("hey jarvis open instagram") || (finalTranscript.includes("instagram"))){
     readOut("opening instagram boss");
     window.open(`https://www.instagram.com/${JSON.parse(userdata).instagram}`);
     return;
   };
 
-  if (finalTranscript.includes("hey jarvis open twitter")){
+  if (finalTranscript.includes("jarvis open twitter")){
     readOut("opening twitter boss");
     window.open(`https://x.com/${JSON.parse(userdata).twitter}`);
     return;
@@ -100,7 +152,7 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
 
 
 
-  if (finalTranscript.includes("open github")){
+  if (finalTranscript.includes("open github") ||  (finalTranscript.includes("open guitar"))){
     readOut("opening github boss");
     window.open(`https://github.com/${JSON.parse(userdata).github}`);
     return;
@@ -117,74 +169,105 @@ if ( finalTranscript.includes("hey jarvis introduce your master") || finalTransc
   if (finalTranscript.includes("hey jarvis please shut down")){
     readOut("okay boss i am taking a nap");
     recognition.stop();
+    return ;
   }
 
   if (finalTranscript.includes("who is tausif")){
     readOut("woh aek gandu hai")
   }
-
-
-  // gemmini ai integration
-
-  function callGeminiAPI(finalTranscript) {
-    const API = "AIzaSyCJMsBxB7ADXFxFmDvTsqLPU-0Qx5Ux3S8"; // Replace with your API key
-    const api_url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API}`;
-  
-    const request = new XMLHttpRequest();
-    request.open("POST", api_url, true);
-  
-    // Set headers for JSON content
-    request.setRequestHeader("Content-Type", "application/json");
-  
-    request.onload = function () {
-      if (this.status === 200) {
-        const apiResult = JSON.parse(this.responseText);
-        console.log("API Result:", apiResult);
-        
-        if (apiResult.candidates && apiResult.candidates[0].content.parts[0].text) {
-          const resultPart = apiResult.candidates[0].content.parts[0].text;
-          console.log("First Part:", resultPart);
-          userCommand .innerText = finalTranscript;
-        let res =  aitext.innerText = resultPart;
-          readOut(res);
-
-          
-        } else {
-          console.error("Unexpected API Response Structure");
-        }
-        
-      } else {
-        console.error(`Gemini API Error: ${this.status} - ${this.responseText}`);
-      }
-    };
-  
-    request.onerror = function () {
-      console.error("Request failed.");
-    };
-  
-    // Correct payload structure
-    const requestData = JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: finalTranscript,
-            },
-          ],
-        },
-      ],
-    });
-  
-    // Send the request
-    request.send(requestData);
-  }
-  
   
   
   // Example call
   callGeminiAPI(finalTranscript);
 
 };
+
+ // gemmini ai integration
+
+ function callGeminiAPI(finalTranscript) {
+  const API = "AIzaSyCJMsBxB7ADXFxFmDvTsqLPU-0Qx5Ux3S8"; // Replace with your API key
+  const api_url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API}`;
+
+  const request = new XMLHttpRequest();
+  request.open("POST", api_url, true);
+
+  // Set headers for JSON content
+  request.setRequestHeader("Content-Type", "application/json");
+
+  request.onload = function () {
+    if (this.status === 200) {
+      const apiResult = JSON.parse(this.responseText);
+      console.log("API Result:", apiResult);
+      
+      if (apiResult.candidates && apiResult.candidates[0].content.parts[0].text.replace(/\* \*\*(.*?)\*\*:/g, "<ul><li><strong>$1</strong>:</li></ul>",/\* /g, "<ul><li>" , /\n/g, "<br><br>" )) {
+        let resultPart = apiResult.candidates[0].content.parts[0].text;
+
+        // Post-process the response to preserve bullet points and spacing
+
+        console.log(resultPart);
+        appendToDiv("user", finalTranscript);
+        appendToDiv("ai", resultPart);
+
+        readOut(resultPart);
+
+
+        
+      } else {
+        console.error("Unexpected API Response Structure");
+      }
+      
+    } else {
+      console.error(`Gemini API Error: ${this.status} - ${this.responseText}`);
+    }
+  };
+
+  request.onerror = function () {
+    console.error("Request failed.");
+  };
+
+  // Correct payload structure
+  const requestData = JSON.stringify({
+    contents: [
+      {
+        parts: [
+          {
+            text: finalTranscript,
+          },
+        ],
+      },
+    ],
+  });
+
+  // Send the request
+  request.send(requestData);
+}
+
+
+const handleUserInput = () => {
+  const userMessage = userInput.value;
+
+  if (userMessage.trim() !== "") {
+    appendToDiv("user", userMessage); 
+    userInput.value = ""; 
+    callGeminiAPI(userMessage);
+  }
+
+  if (userMessage.includes("who is your developer")){
+    
+    return "i am developed by shadil"
+  }
+};
+
+inputSubmit.addEventListener("click", handleUserInput);
+
+// Listen for Enter key press
+userInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleUserInput();
+  }
+});
+
+
 
 // sr for continous capturing voice
   recognition.continuous = true;
@@ -202,7 +285,7 @@ stopbtn.addEventListener("click", () => {
 function readOut (message) {
   const speech = new SpeechSynthesisUtterance();
   const allVoices = speechSynthesis.getVoices()
-  speech.voice = allVoices[10];
+  speech.voice = allVoices[15];
   speech.text = message;
   speech.volume = 1;
   speech.rate = 0.9;
@@ -230,6 +313,7 @@ function weather(location){
   xhr.onload = function() {
     if (this.status === 200){
       let data = JSON.parse(this.responseText);
+      console.log(data);
       weatherCount[0].textContent = `Location : ${data.name}`;
       weatherCount[1].textContent = `Country : ${data.sys.country}`
       weatherCount[2].textContent = `Weather type: ${data.weather[0].main}`
@@ -248,7 +332,8 @@ function weather(location){
 
       weatherCount[7].textContent = `Max Temp: ${ktc(data.main.temp_max)}°C`;
 
-      weatherCount[8].textContent = `Min Temp: ${ktc(data.main.temp_min)}°C`;
+      weatherCount[8].textContent = `Min Temp: ${ktc(data.main.temp_min
+      )}°C`;
 
       weatherStatement = `sir the weather in ${data.name} is ${data.weather[0].description} and the temperature feels like ${ktc(data.main.temp )}`
       
@@ -315,6 +400,6 @@ function userInfo() {
 
 
 
-weather("delhi");
+weather("samastipur");
 
 

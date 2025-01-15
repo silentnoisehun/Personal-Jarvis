@@ -76,9 +76,11 @@
         <p>AI Chat will appear here...</p>
       </div>
 
+
       <!-- Weather Widget -->
       <div class="weather">
         <div class="temp">
+          <h4>Your City Weather Info</h4>
           <p id="Location"></p>
           <p id="country"></p>
           <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="Weather Icon" class="weatherIcon">
@@ -91,12 +93,17 @@
         </div>
       </div>
     </div>
-
+    <div class="userText">
+      <label for="text">
+        <input type="text" id="textinput" placeholder="Search here...">
+        <button type="submit" id="submit-btn"><i class="fa-solid fa-arrow-up"></i></button>
+      </label>
+    </div>
     <!-- Control Buttons -->
     <div class="btn-call">
       <button id="start">Start</button>
-      <button id="stop">Stop</button>
-      <button id="speak">Speak Out</button>
+      <button id="stop" style="background-color: rgba(255, 0, 0, 0.454);">Stop</button>
+      <button id="speak" style="background-color: rgb(228, 203, 9);">Speak Out</button>
     </div>
   </div>
 </body>
@@ -144,6 +151,7 @@
 
 
 <script src="app.js"></script>
+<script src="https://kit.fontawesome.com/ab56d9cd66.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
